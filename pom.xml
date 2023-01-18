@@ -55,7 +55,7 @@
             <version>2.8.6</version>
         </dependency>
 
-        
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
