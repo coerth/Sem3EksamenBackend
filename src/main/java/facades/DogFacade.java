@@ -50,13 +50,15 @@ public class DogFacade
 
     public DogDto createDog(DogDto dogDto)
     {
-        Dog dog = new Dog(dogDto);
-
         EntityManager em = emf.createEntityManager();
+        Dog dog = new Dog(dogDto);
+        Owner owner = em.find(Owner.class, dog.getOwner().getId());
+        owner.addDog(dog);
+
         em.getTransaction().begin();
         if(dog.getOwner().getId() != null)
         {
-            em.merge(dog.getOwner());
+            em.merge(owner);
         }
         else{
         em.persist(dog);

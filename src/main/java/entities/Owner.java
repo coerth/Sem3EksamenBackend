@@ -126,4 +126,10 @@ public class Owner {
 
        return bool;
     }
+
+    public void addDog(Dog dog)
+    {
+        dogs.add(dog);
+        dog.setOwner(this);
+    }
 }

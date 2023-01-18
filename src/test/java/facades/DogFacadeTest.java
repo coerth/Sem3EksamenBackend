@@ -91,6 +91,7 @@ public class DogFacadeTest
         assertNotNull(actual);
 
         List<DogDto> dogDtoList = dogFacade.getAllDogs();
+        System.out.println(dogDtoList);
         assertEquals(3, dogDtoList.size());
     }
 

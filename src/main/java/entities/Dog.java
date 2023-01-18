@@ -176,4 +176,5 @@ public class Dog {
         owner.getDogs().remove(this);
         //setOwner(null);
     }
+
 }
