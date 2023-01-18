@@ -38,14 +38,4 @@ public class OwnerFacade
         return OwnerDto.getDTOS(ownerList);
     }
 
-    public List<DogDto> getAllDogsFromOwner(int id)
-    {
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Dog> query = em.createQuery("SELECT d FROM Owner o JOIN Dog d WHERE o.id = :id", Dog.class);
-        query.setParameter("id", id);
-        List<Dog> dogList = query.getResultList();
-
-        return DogDto.getDTOS(dogList);
-
-    }
 }
