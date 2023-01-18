@@ -110,7 +110,14 @@ public class DogFacadeTest
         dogDto = new DogDto(d1);
         actual = dogFacade.updateDog(dogDto);
 
-        assertEquals("Bilbo", dogDto.getOwner().getName());
+        assertEquals("Bilbo", actual.getOwner().getName());
+
+        d2.getWalkers().add(w2);
+        dogDto = new DogDto(d2);
+        actual = dogFacade.updateDog(dogDto);
+
+        assertEquals(2, actual.getWalkers().size());
+
     }
 
     @Test

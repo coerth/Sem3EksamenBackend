@@ -10,7 +10,9 @@ import handlers.DogHandler;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DogFacade
 {
@@ -72,6 +74,7 @@ public class DogFacade
     public DogDto updateDog(DogDto dogDto)
     {
         EntityManager em = emf.createEntityManager();
+        Set<Walker> updatedWalkerSet = new LinkedHashSet<>();
 
         Dog dog = em.find(Dog.class, dogDto.getId());
         Owner owner;
@@ -80,8 +83,18 @@ public class DogFacade
             owner = em.find(Owner.class, dogDto.getOwner().getId());
             dog.setOwner(owner);
         }
-
         Dog updatedDog = DogHandler.dogUpdateHandler(dog, dogDto);
+
+        for(DogDto.InnerWalkerDto walkerDto : dogDto.getWalkers())
+        {
+            Walker walker = em.find(Walker.class, walkerDto.getId());
+            updatedWalkerSet.add(walker);
+        }
+        if(!dog.getWalkers().equals(updatedWalkerSet))
+        {
+            dog.setWalkers(updatedWalkerSet);
+        }
+
 
         em.getTransaction().begin();
         em.merge(updatedDog);
