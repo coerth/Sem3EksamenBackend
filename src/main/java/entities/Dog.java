@@ -24,6 +24,11 @@ public class Dog {
     private String name;
 
     @Size(max = 45)
+    @NotNull
+    @Column(name = "breed", nullable = false, length = 45)
+    private String breed;
+
+    @Size(max = 45)
     @Column(name = "image", length = 45)
     private String image;
 
@@ -125,6 +130,14 @@ public class Dog {
 
     public void setWalkers(Set<Walker> walkers) {
         this.walkers = walkers;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     @Override

@@ -1,18 +1,21 @@
 package dtos;
 
+import entities.Dog;
+import entities.Owner;
+import entities.Walker;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Owner} entity
  */
 public class OwnerDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @Size(max = 45)
     @NotNull
     private final String name;
@@ -22,7 +25,7 @@ public class OwnerDto implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String phone;
-    private final Set<InnerDogDto> dogs;
+    private Set<InnerDogDto> dogs = new LinkedHashSet<>();
 
     public OwnerDto(Integer id, String name, String address, String phone, Set<InnerDogDto> dogs) {
         this.id = id;
@@ -30,6 +33,29 @@ public class OwnerDto implements Serializable {
         this.address = address;
         this.phone = phone;
         this.dogs = dogs;
+    }
+
+    public OwnerDto(Owner owner)
+    {
+        if(owner.getId() != null)
+        {
+            this.id = owner.getId();
+        }
+        this.name = owner.getName();
+        this.address = owner.getAddress();
+        this.phone = owner.getPhone();
+        if(owner.getDogs() != null)
+        {
+            owner.getDogs().forEach(dog -> dogs.add(new InnerDogDto(dog)));
+        }
+    }
+
+    public static List<OwnerDto> getDTOS(List<Owner> ownerList)
+    {
+        List<OwnerDto> ownerDtoList = new ArrayList<>();
+        ownerList.forEach(owner -> ownerDtoList.add(new OwnerDto(owner)));
+
+        return ownerDtoList;
     }
 
     public Integer getId() {
@@ -83,25 +109,47 @@ public class OwnerDto implements Serializable {
      * A DTO for the {@link entities.Dog} entity
      */
     public static class InnerDogDto implements Serializable {
-        private final Integer id;
+        private Integer id;
         @Size(max = 45)
         @NotNull
         private final String name;
+
+        @Size(max = 45)
+        @NotNull
+        private final String breed;
         @Size(max = 45)
         private final String image;
         @NotNull
         private final String gender;
         @NotNull
-        private final LocalDate birthdate;
-        private final Set<InnerWalkerDto> walkers;
+        private final String birthdate;
+        private Set<InnerWalkerDto> walkers = new LinkedHashSet<>();
 
-        public InnerDogDto(Integer id, String name, String image, String gender, LocalDate birthdate, Set<InnerWalkerDto> walkers) {
+        public InnerDogDto(Integer id, String name, String breed, String image, String gender, LocalDate birthdate, Set<InnerWalkerDto> walkers) {
             this.id = id;
             this.name = name;
+            this.breed = breed;
             this.image = image;
             this.gender = gender;
-            this.birthdate = birthdate;
+            this.birthdate = birthdate.toString();
             this.walkers = walkers;
+        }
+
+        public InnerDogDto(Dog dog)
+        {
+            if(dog.getId() != null)
+            {
+                this.id = dog.getId();
+            }
+            this.name = dog.getName();
+            this.breed = dog.getBreed();
+            this.image = dog.getImage();
+            this.gender = dog.getGender();
+            this.birthdate = dog.getBirthdate().toString();
+            if(dog.getWalkers() != null)
+            {
+                dog.getWalkers().forEach(walker -> walkers.add(new InnerWalkerDto(walker)));
+            }
         }
 
         public Integer getId() {
@@ -120,7 +168,7 @@ public class OwnerDto implements Serializable {
             return gender;
         }
 
-        public LocalDate getBirthdate() {
+        public String getBirthdate() {
             return birthdate;
         }
 
@@ -161,7 +209,7 @@ public class OwnerDto implements Serializable {
          * A DTO for the {@link entities.Walker} entity
          */
         public static class InnerWalkerDto implements Serializable {
-            private final Integer id;
+            private Integer id;
             @Size(max = 45)
             @NotNull
             private final String name;
@@ -177,6 +225,17 @@ public class OwnerDto implements Serializable {
                 this.name = name;
                 this.address = address;
                 this.phone = phone;
+            }
+
+            public InnerWalkerDto(Walker walker)
+            {
+                if(walker.getId() != null)
+                {
+                    this.id = walker.getId();
+                }
+                this.name = walker.getName();
+                this.address = walker.getAddress();
+                this.phone = walker.getPhone();
             }
 
             public Integer getId() {

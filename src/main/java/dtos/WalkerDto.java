@@ -114,6 +114,10 @@ public class WalkerDto implements Serializable {
         @Size(max = 45)
         @NotNull
         private final String name;
+
+        @Size(max = 45)
+        @NotNull
+        private final String breed;
         @Size(max = 45)
         private final String image;
         @NotNull
@@ -123,9 +127,10 @@ public class WalkerDto implements Serializable {
         @NotNull
         private final InnerOwnerDto owner;
 
-        public InnerDogDto(Integer id, String name, String image, String gender, LocalDate birthdate, InnerOwnerDto owner) {
+        public InnerDogDto(Integer id, String name, String breed, String image, String gender, LocalDate birthdate, InnerOwnerDto owner) {
             this.id = id;
             this.name = name;
+            this.breed = breed;
             this.image = image;
             this.gender = gender;
             this.birthdate = birthdate.toString();
@@ -139,6 +144,7 @@ public class WalkerDto implements Serializable {
                 this.id = dog.getId();
             }
             this.name = dog.getName();
+            this.breed = dog.getBreed();
             this.image = dog.getImage();
             this.gender = dog.getGender();
             this.birthdate = dog.getBirthdate().toString();
