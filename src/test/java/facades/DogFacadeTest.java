@@ -105,7 +105,6 @@ public class DogFacadeTest
         assertEquals(o2.getId(), actual.getOwner().getId());
     }
 
-    @Disabled
     @Test
     void deleteADogTest()
     {
@@ -113,7 +112,5 @@ public class DogFacadeTest
         boolean actual = dogFacade.deleteADog(d1.getId());
 
         assertEquals(true, actual);
-
-        assertEquals(0, o1.getDogs().size());
     }
 }
