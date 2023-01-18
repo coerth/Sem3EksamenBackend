@@ -1,42 +1,38 @@
 package facades;
 
-import dtos.WalkerDto;
+import dtos.DogDto;
+import dtos.OwnerDto;
 import entities.Dog;
 import entities.Owner;
-import entities.User;
 import entities.Walker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mindrot.jbcrypt.BCrypt;
-import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WalkerFacadeTest
+public class DogFacadeTest
 {
     private static EntityManagerFactory emf;
-    private static WalkerFacade walkerFacade;
+    private static DogFacade dogFacade;
 
     Walker w1, w2;
     Dog d1, d2;
     Owner o1, o2;
 
-    public WalkerFacadeTest() {
+    public DogFacadeTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        walkerFacade = WalkerFacade.getInstance(emf);
+        dogFacade = DogFacade.getInstance(emf);
     }
 
     @BeforeEach
@@ -70,10 +66,9 @@ public class WalkerFacadeTest
     }
 
     @Test
-    void getAllWalkersTest()
+    void getAllDogsFromOwnerIdTest()
     {
-        List<WalkerDto> actual = walkerFacade.getAllWalkers();
-        assertEquals(2, actual.size());
+        List<DogDto> actual = dogFacade.getAllDogsFromOwner(o1.getId());
+        assertEquals(1, actual.size());
     }
-
 }

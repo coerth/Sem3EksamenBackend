@@ -55,8 +55,9 @@ public class Dog {
     public Dog() {
     }
 
-    public Dog(String name, String gender, LocalDate birthdate, Owner owner) {
+    public Dog(String name, String gender, String breed, LocalDate birthdate, Owner owner) {
         this.name = name;
+        this.breed = breed;
         this.gender = gender;
         this.birthdate = birthdate;
         this.owner = owner;
