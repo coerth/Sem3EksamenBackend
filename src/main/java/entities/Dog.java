@@ -37,11 +37,11 @@ public class Dog {
     private LocalDate birthdate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "dogs")
     @JoinTable(name = "walker_has_dog",
             joinColumns = @JoinColumn(name = "Dog_id"),
             inverseJoinColumns = @JoinColumn(name = "Walker_id"))
@@ -50,17 +50,25 @@ public class Dog {
     public Dog() {
     }
 
+    public Dog(String name, String gender, LocalDate birthdate, Owner owner) {
+        this.name = name;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.owner = owner;
+        this.owner.getDogs().add(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dog dog = (Dog) o;
-        return id.equals(dog.id);
+        return id.equals(dog.id) && name.equals(dog.name) && image.equals(dog.image) && gender.equals(dog.gender) && birthdate.equals(dog.birthdate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, image, gender, birthdate);
     }
 
     public Integer getId() {

@@ -40,17 +40,23 @@ public class Walker {
     public Walker() {
     }
 
+    public Walker(String name, String address, String phone) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Walker walker = (Walker) o;
-        return id.equals(walker.id);
+        return id.equals(walker.id) && name.equals(walker.name) && address.equals(walker.address) && phone.equals(walker.phone) && Objects.equals(dogs, walker.dogs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, address, phone, dogs);
     }
 
     public Integer getId() {
@@ -102,5 +108,11 @@ public class Walker {
                 ", phone='" + phone + '\'' +
                 ", dogs=" + dogs.size() +
                 '}';
+    }
+
+    public void addDog(Dog dog)
+    {
+        dogs.add(dog);
+        dog.getWalkers().add(this);
     }
 }

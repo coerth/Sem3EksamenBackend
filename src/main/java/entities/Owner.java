@@ -31,10 +31,16 @@ public class Owner {
     @Column(name = "phone", nullable = false, length = 45)
     private String phone;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
     private Set<Dog> dogs = new LinkedHashSet<>();
 
     public Owner() {
+    }
+
+    public Owner(String name, String address, String phone) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
     }
 
     @Override
