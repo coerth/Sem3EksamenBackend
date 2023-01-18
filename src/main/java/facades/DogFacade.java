@@ -5,6 +5,7 @@ import dtos.WalkerDto;
 import entities.Dog;
 import entities.Owner;
 import entities.Walker;
+import handlers.DogHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -72,16 +73,18 @@ public class DogFacade
     {
         EntityManager em = emf.createEntityManager();
 
-        Dog dog = new Dog(dogDto);
+        Dog dog = em.find(Dog.class, dogDto.getId());
         Owner owner;
-        if(dogDto.getOwner().getId() != null)
+        if(dogDto.getOwner().getId() != null && !dogDto.getOwner().getId().equals(dog.getOwner().getId()))
         {
             owner = em.find(Owner.class, dogDto.getOwner().getId());
             dog.setOwner(owner);
         }
 
+        Dog updatedDog = DogHandler.dogUpdateHandler(dog, dogDto);
+
         em.getTransaction().begin();
-        em.merge(dog);
+        em.merge(updatedDog);
         em.getTransaction().commit();
 
         return new DogDto(dog);

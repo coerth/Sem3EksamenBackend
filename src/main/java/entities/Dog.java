@@ -86,12 +86,12 @@ public class Dog {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dog dog = (Dog) o;
-        return id.equals(dog.id) && name.equals(dog.name) && image.equals(dog.image) && gender.equals(dog.gender) && birthdate.equals(dog.birthdate);
+        return id.equals(dog.id) && name.equals(dog.name) && breed.equals(dog.breed) && image.equals(dog.image) && gender.equals(dog.gender) && birthdate.equals(dog.birthdate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, image, gender, birthdate);
+        return Objects.hash(id, name, breed, image, gender, birthdate);
     }
 
     public Integer getId() {

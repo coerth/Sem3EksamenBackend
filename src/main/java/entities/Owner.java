@@ -61,12 +61,12 @@ public class Owner {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return id.equals(owner.id);
+        return id.equals(owner.id) && name.equals(owner.name) && address.equals(owner.address) && phone.equals(owner.phone) && Objects.equals(dogs, owner.dogs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, address, phone, dogs);
     }
 
     public Integer getId() {

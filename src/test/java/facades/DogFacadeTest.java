@@ -98,12 +98,19 @@ public class DogFacadeTest
     @Test
     void updateDogTest()
     {
+
         d1.setOwner(o2);
         DogDto dogDto = new DogDto(d1);
 
         DogDto actual = dogFacade.updateDog(dogDto);
 
         assertEquals(o2.getId(), actual.getOwner().getId());
+
+        d1.getOwner().setName("Bilbo");
+        dogDto = new DogDto(d1);
+        actual = dogFacade.updateDog(dogDto);
+
+        assertEquals("Bilbo", dogDto.getOwner().getName());
     }
 
     @Test
