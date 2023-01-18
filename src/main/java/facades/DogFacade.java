@@ -28,7 +28,7 @@ public class DogFacade
     public List<DogDto> getAllDogsFromOwner(int id)
     {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Dog> query = em.createQuery("SELECT d FROM Dog d WHERE d.id = :id", Dog.class);
+        TypedQuery<Dog> query = em.createQuery("SELECT d FROM Dog d WHERE d.owner.id = :id", Dog.class);
         query.setParameter("id", id);
         List<Dog> dogList = query.getResultList();
 
