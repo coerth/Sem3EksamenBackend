@@ -49,5 +49,14 @@ public class DogResource
         return Response.ok(GSON.toJson(FACADE.createDog(dogDto))).build();
     }
 
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateADog(String content)
+    {
+        DogDto dogDto = GSON.fromJson(content, DogDto.class);
+
+        return Response.ok(GSON.toJson(FACADE.updateDog(dogDto))).build();
+    }
 
 }

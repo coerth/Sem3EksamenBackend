@@ -3,6 +3,7 @@ package facades;
 import dtos.DogDto;
 import dtos.WalkerDto;
 import entities.Dog;
+import entities.Owner;
 import entities.Walker;
 
 import javax.persistence.EntityManager;
@@ -60,6 +61,25 @@ public class DogFacade
         else{
         em.persist(dog);
         }
+        em.getTransaction().commit();
+
+        return new DogDto(dog);
+    }
+
+    public DogDto updateDog(DogDto dogDto)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        Dog dog = new Dog(dogDto);
+        Owner owner;
+        if(dogDto.getOwner().getId() != null)
+        {
+            owner = em.find(Owner.class, dogDto.getOwner().getId());
+            dog.setOwner(owner);
+        }
+
+        em.getTransaction().begin();
+        em.merge(dog);
         em.getTransaction().commit();
 
         return new DogDto(dog);

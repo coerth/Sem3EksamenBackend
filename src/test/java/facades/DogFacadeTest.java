@@ -92,4 +92,15 @@ public class DogFacadeTest
         List<DogDto> dogDtoList = dogFacade.getAllDogs();
         assertEquals(3, dogDtoList.size());
     }
+
+    @Test
+    void updateDogTest()
+    {
+        d1.setOwner(o2);
+        DogDto dogDto = new DogDto(d1);
+
+        DogDto actual = dogFacade.updateDog(dogDto);
+
+        assertEquals(o2.getId(), actual.getOwner().getId());
+    }
 }
