@@ -53,7 +53,13 @@ public class DogFacade
 
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+        if(dog.getOwner().getId() != null)
+        {
+            em.merge(dog.getOwner());
+        }
+        else{
         em.persist(dog);
+        }
         em.getTransaction().commit();
 
         return new DogDto(dog);

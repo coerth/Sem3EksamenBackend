@@ -44,7 +44,7 @@ public class Dog {
     private LocalDate birthdate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
@@ -78,6 +78,7 @@ public class Dog {
         this.gender = dogDto.getGender();
         this.birthdate = LocalDate.parse(dogDto.getBirthdate());
         this.owner = new Owner(dogDto.getOwner());
+        this.owner.getDogs().add(this);
     }
 
     @Override
