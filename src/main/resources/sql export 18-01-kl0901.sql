@@ -29,7 +29,7 @@ CREATE TABLE `dog` (
   `name` varchar(45) NOT NULL,
   `image` varchar(45) DEFAULT NULL,
   `gender` enum('Male','Female') NOT NULL,
-  `birthdate` datetime NOT NULL,
+  `birthdate` date NOT NULL,
   `owner_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Dog_owner1_idx` (`owner_id`),
@@ -43,7 +43,7 @@ CREATE TABLE `dog` (
 
 LOCK TABLES `dog` WRITE;
 /*!40000 ALTER TABLE `dog` DISABLE KEYS */;
-INSERT INTO `dog` VALUES (1,'Pjevs',NULL,'Male','2022-12-20 00:00:00',1),(2,'Queen',NULL,'Female','2020-06-12 00:00:00',1),(3,'Ellie',NULL,'Female','2017-10-06 00:00:00',2),(4,'Fredo',NULL,'Male','2017-06-06 00:00:00',2),(5,'Pepper',NULL,'Male','2016-05-12 00:00:00',3),(6,'Ole',NULL,'Male','2018-02-12 00:00:00',3);
+INSERT INTO `dog` VALUES (1,'Pjevs',NULL,'Male','2022-12-20',1),(2,'Queen',NULL,'Female','2020-06-12',1),(3,'Ellie',NULL,'Female','2017-10-06',2),(4,'Fredo',NULL,'Male','2017-06-06',2),(5,'Pepper',NULL,'Male','2016-05-12',3),(6,'Ole',NULL,'Male','2018-02-12',3);
 /*!40000 ALTER TABLE `dog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,4 +213,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-18  9:01:56
+-- Dump completed on 2023-01-18  9:41:09

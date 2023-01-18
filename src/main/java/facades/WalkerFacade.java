@@ -1,6 +1,13 @@
 package facades;
 
+import dtos.WalkerDto;
+import entities.Walker;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class WalkerFacade
 {
@@ -18,4 +25,13 @@ public class WalkerFacade
         return instance;
     }
 
+    public List<WalkerDto> getAllWalkers()
+    {
+        EntityManager em = emf.createEntityManager();
+
+        TypedQuery<Walker> query = em.createQuery("SELECT w FROM Walker w", Walker.class);
+        List<Walker> walkerList = query.getResultList();
+
+        return WalkerDto.getDTOS(walkerList);
+    }
 }

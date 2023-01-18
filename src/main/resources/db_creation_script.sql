@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `sem3eksamen`.`dog` (
   `name` VARCHAR(45) NOT NULL,
   `image` VARCHAR(45) NULL,
   `gender` ENUM('Male', 'Female') NOT NULL,
-  `birthdate` DATETIME NOT NULL,
+  `birthdate` DATE NOT NULL,
   `owner_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Dog_owner1_idx` (`owner_id` ASC) VISIBLE,

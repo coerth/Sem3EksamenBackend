@@ -31,7 +31,7 @@ public class Walker {
     @Column(name = "phone", nullable = false, length = 45)
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "walker_has_dog",
             joinColumns = @JoinColumn(name = "Walker_id"),
             inverseJoinColumns = @JoinColumn(name = "Dog_id"))
