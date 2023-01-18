@@ -34,4 +34,15 @@ public class WalkerFacade
 
         return WalkerDto.getDTOS(walkerList);
     }
+
+    public List<WalkerDto> getAllWalkersByDogId(int id)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        TypedQuery<Walker> query = em.createQuery("SELECT w FROM Walker w join w.dogs d Where d.id = :id", Walker.class);
+        query.setParameter("id", id);
+        List<Walker> walkerList = query.getResultList();
+
+        return WalkerDto.getDTOS(walkerList);
+    }
 }

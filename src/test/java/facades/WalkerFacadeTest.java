@@ -76,4 +76,14 @@ public class WalkerFacadeTest
         assertEquals(2, actual.size());
     }
 
+    @Test
+    void getAllWalkersByDogIdTest()
+    {
+        List<WalkerDto> actual = walkerFacade.getAllWalkersByDogId(d1.getId());
+        assertEquals(2, actual.size());
+
+        actual = walkerFacade.getAllWalkersByDogId(d2.getId());
+        assertEquals(1, actual.size());
+    }
+
 }
