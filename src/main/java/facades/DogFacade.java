@@ -84,4 +84,22 @@ public class DogFacade
 
         return new DogDto(dog);
     }
+
+    public boolean deleteADog(int id)
+    {
+        EntityManager em = emf.createEntityManager();
+        Dog dog = em.find(Dog.class, id);
+        dog.getOwner().removeDog(dog);
+
+        em.getTransaction().begin();
+        em.remove(dog);
+        em.getTransaction().commit();
+
+        dog = em.find(Dog.class, id);
+        if(dog == null)
+        {
+            return true;
+        }
+        return false;
+    }
 }

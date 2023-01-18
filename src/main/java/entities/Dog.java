@@ -170,4 +170,10 @@ public class Dog {
                 ", walkers=" + walkers.size() +
                 '}';
     }
+
+    public void removeOwner ()
+    {
+        owner.getDogs().remove(this);
+        //setOwner(null);
+    }
 }

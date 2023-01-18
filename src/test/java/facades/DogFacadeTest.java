@@ -8,6 +8,7 @@ import entities.Owner;
 import entities.Walker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
@@ -102,5 +103,17 @@ public class DogFacadeTest
         DogDto actual = dogFacade.updateDog(dogDto);
 
         assertEquals(o2.getId(), actual.getOwner().getId());
+    }
+
+    @Disabled
+    @Test
+    void deleteADogTest()
+    {
+
+        boolean actual = dogFacade.deleteADog(d1.getId());
+
+        assertEquals(true, actual);
+
+        assertEquals(0, o1.getDogs().size());
     }
 }

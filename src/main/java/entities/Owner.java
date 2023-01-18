@@ -33,7 +33,7 @@ public class Owner {
     @Column(name = "phone", nullable = false, length = 45)
     private String phone;
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private Set<Dog> dogs = new LinkedHashSet<>();
 
     public Owner() {
@@ -118,5 +118,12 @@ public class Owner {
                 ", phone='" + phone + '\'' +
                 ", dogs=" + dogs.size() +
                 '}';
+    }
+
+    public boolean removeDog(Dog dog)
+    {
+       boolean bool = dogs.remove(dog);
+
+       return bool;
     }
 }

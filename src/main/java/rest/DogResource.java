@@ -59,4 +59,12 @@ public class DogResource
         return Response.ok(GSON.toJson(FACADE.updateDog(dogDto))).build();
     }
 
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteADog(@PathParam("id") int id)
+    {
+        return Response.ok(GSON.toJson(FACADE.deleteADog(id))).build();
+    }
 }
