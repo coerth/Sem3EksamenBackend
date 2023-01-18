@@ -2,6 +2,7 @@ package facades;
 
 import dtos.DogDto;
 import dtos.OwnerDto;
+import dtos.WalkerDto;
 import entities.Dog;
 import entities.Owner;
 import entities.Walker;
@@ -63,6 +64,13 @@ public class DogFacadeTest
         } finally {
             em.close();
         }
+    }
+
+    @Test
+    void getAllDogsTest()
+    {
+        List<DogDto> actual = dogFacade.getAllDogs();
+        assertEquals(2, actual.size());
     }
 
     @Test

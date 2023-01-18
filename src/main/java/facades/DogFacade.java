@@ -1,7 +1,9 @@
 package facades;
 
 import dtos.DogDto;
+import dtos.WalkerDto;
 import entities.Dog;
+import entities.Walker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +26,16 @@ public class DogFacade
         return instance;
     }
 
+
+    public List<DogDto> getAllDogs()
+    {
+        EntityManager em = emf.createEntityManager();
+
+        TypedQuery<Dog> query = em.createQuery("SELECT d FROM Dog d", Dog.class);
+        List<Dog> dogList = query.getResultList();
+
+        return DogDto.getDTOS(dogList);
+    }
 
     public List<DogDto> getAllDogsFromOwner(int id)
     {

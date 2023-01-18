@@ -26,6 +26,13 @@ public class DogResource
     @Context
     SecurityContext securityContext;
 
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDogs()
+    {
+        return Response.ok(GSON.toJson(FACADE.getAllDogs())).build();
+    }
     @GET
     @Path("owner/{id}")
     @Produces(MediaType.APPLICATION_JSON)
