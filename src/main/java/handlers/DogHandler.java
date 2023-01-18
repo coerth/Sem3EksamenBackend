@@ -17,22 +17,22 @@ public class DogHandler
 
         if(dogDto.getName() != null && !dog.getName().equals(dogDto.getName()))
         {
-            updatedDog.setName(dog.getName());
+            updatedDog.setName(dogDto.getName());
         }
 
         if(dogDto.getBreed() != null && !dog.getBreed().equals(dogDto.getBreed()))
         {
-            updatedDog.setBreed(dog.getBreed());
+            updatedDog.setBreed(dogDto.getBreed());
         }
 
         if(dogDto.getImage() != null && !dog.getImage().equals(dogDto.getImage()))
         {
-            updatedDog.setImage(dog.getImage());
+            updatedDog.setImage(dogDto.getImage());
         }
 
         if(dogDto.getGender() != null && !dog.getGender().equals(dogDto.getGender()))
         {
-            updatedDog.setGender(dog.getGender());
+            updatedDog.setGender(dogDto.getGender());
         }
 
         if(dogDto.getBirthdate() != null && !dog.getBirthdate().toString().equals(dogDto.getBirthdate()))

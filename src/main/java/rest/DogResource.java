@@ -50,9 +50,10 @@ public class DogResource
     }
 
     @PUT
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateADog(String content)
+    public Response updateADog(@PathParam("id") int id, String content)
     {
         DogDto dogDto = GSON.fromJson(content, DogDto.class);
 

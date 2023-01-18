@@ -89,9 +89,9 @@ public class DogFacadeTest
         DogDto actual = dogFacade.createDog(new DogDto(dog));
 
         assertNotNull(actual);
+        assertEquals(o2.getId(), actual.getOwner().getId());
 
         List<DogDto> dogDtoList = dogFacade.getAllDogs();
-        System.out.println(dogDtoList);
         assertEquals(3, dogDtoList.size());
     }
 
@@ -117,6 +117,11 @@ public class DogFacadeTest
         actual = dogFacade.updateDog(dogDto);
 
         assertEquals(2, actual.getWalkers().size());
+
+        d2.setName("Oswald");
+        dogDto = new DogDto(d2);
+        actual = dogFacade.updateDog(dogDto);
+        assertEquals("Oswald", actual.getName());
 
     }
 

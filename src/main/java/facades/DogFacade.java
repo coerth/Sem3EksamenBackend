@@ -59,15 +59,24 @@ public class DogFacade
         owner.addDog(dog);
 
         em.getTransaction().begin();
-        if(dog.getOwner().getId() != null)
-        {
-            em.merge(owner);
-        }
-        else{
         em.persist(dog);
-        }
         em.getTransaction().commit();
 
+        /*if(dog.getOwner().getId() != null)
+        {
+            em.getTransaction().begin();
+            em.merge(owner);
+            em.getTransaction().commit();
+
+        }
+        else{
+            em.getTransaction().begin();
+            em.persist(dog);
+            em.getTransaction().commit();
+        }*/
+
+        em.close();
+        System.out.println(dog);
         return new DogDto(dog);
     }
 
@@ -76,23 +85,23 @@ public class DogFacade
         EntityManager em = emf.createEntityManager();
         Set<Walker> updatedWalkerSet = new LinkedHashSet<>();
 
-        Dog dog = em.find(Dog.class, dogDto.getId());
+        Dog dogFromDb = em.find(Dog.class, dogDto.getId());
         Owner owner;
-        if(dogDto.getOwner().getId() != null && !dogDto.getOwner().getId().equals(dog.getOwner().getId()))
+        if(dogDto.getOwner().getId() != null && !dogDto.getOwner().getId().equals(dogFromDb.getOwner().getId()))
         {
             owner = em.find(Owner.class, dogDto.getOwner().getId());
-            dog.setOwner(owner);
+            dogFromDb.setOwner(owner);
         }
-        Dog updatedDog = DogHandler.dogUpdateHandler(dog, dogDto);
+        Dog updatedDog = DogHandler.dogUpdateHandler(dogFromDb, dogDto);
 
         for(DogDto.InnerWalkerDto walkerDto : dogDto.getWalkers())
         {
             Walker walker = em.find(Walker.class, walkerDto.getId());
             updatedWalkerSet.add(walker);
         }
-        if(!dog.getWalkers().equals(updatedWalkerSet))
+        if(!dogFromDb.getWalkers().equals(updatedWalkerSet))
         {
-            dog.setWalkers(updatedWalkerSet);
+            dogFromDb.setWalkers(updatedWalkerSet);
         }
 
 
@@ -100,7 +109,7 @@ public class DogFacade
         em.merge(updatedDog);
         em.getTransaction().commit();
 
-        return new DogDto(dog);
+        return new DogDto(dogFromDb);
     }
 
     public boolean deleteADog(int id)
