@@ -45,6 +45,17 @@ public class DogFacade
         List<Dog> dogList = query.getResultList();
 
         return DogDto.getDTOS(dogList);
+    }
 
+    public DogDto createDog(DogDto dogDto)
+    {
+        Dog dog = new Dog(dogDto);
+
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(dog);
+        em.getTransaction().commit();
+
+        return new DogDto(dog);
     }
 }

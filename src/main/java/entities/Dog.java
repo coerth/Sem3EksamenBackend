@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.DogDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,13 +57,27 @@ public class Dog {
     public Dog() {
     }
 
-    public Dog(String name, String gender, String breed, LocalDate birthdate, Owner owner) {
+    public Dog(String name, String breed, String gender, LocalDate birthdate, Owner owner) {
         this.name = name;
         this.breed = breed;
         this.gender = gender;
         this.birthdate = birthdate;
         this.owner = owner;
         this.owner.getDogs().add(this);
+    }
+
+    public Dog(DogDto dogDto)
+    {
+        if(dogDto.getId() != null)
+        {
+            this.id = dogDto.getId();
+        }
+
+        this.name = dogDto.getName();
+        this.breed = dogDto.getBreed();
+        this.gender = dogDto.getGender();
+        this.birthdate = LocalDate.parse(dogDto.getBirthdate());
+        this.owner = new Owner(dogDto.getOwner());
     }
 
     @Override

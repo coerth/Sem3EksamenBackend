@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DogFacadeTest
 {
@@ -78,5 +79,17 @@ public class DogFacadeTest
     {
         List<DogDto> actual = dogFacade.getAllDogsFromOwner(o1.getId());
         assertEquals(1, actual.size());
+    }
+
+    @Test
+    void createDogTest()
+    {
+        Dog dog = new Dog("NewDog", "TestDog", "Female", LocalDate.now(), o2);
+        DogDto actual = dogFacade.createDog(new DogDto(dog));
+
+        assertNotNull(actual);
+
+        List<DogDto> dogDtoList = dogFacade.getAllDogs();
+        assertEquals(3, dogDtoList.size());
     }
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.DogDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +43,17 @@ public class Owner {
         this.name = name;
         this.address = address;
         this.phone = phone;
+    }
+
+    public Owner(DogDto.InnerOwnerDto owner)
+    {
+        if(owner.getId() != null)
+        {
+            this.id = owner.getId();
+        }
+        this.name = owner.getName();
+        this.address = owner.getAddress();
+        this.phone = owner.getPhone();
     }
 
     @Override

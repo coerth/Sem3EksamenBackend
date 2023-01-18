@@ -98,6 +98,10 @@ public class DogDto implements Serializable {
         return walkers;
     }
 
+    public String getBreed() {
+        return breed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

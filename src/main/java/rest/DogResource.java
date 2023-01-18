@@ -2,15 +2,13 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.DogDto;
 import facades.DogFacade;
 import facades.OwnerFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 @Path("dog")
@@ -40,4 +38,16 @@ public class DogResource
     {
         return Response.ok(GSON.toJson(FACADE.getAllDogsFromOwner(id))).build();
     }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createADog(String content)
+    {
+        DogDto dogDto = GSON.fromJson(content, DogDto.class);
+
+        return Response.ok(GSON.toJson(FACADE.createDog(dogDto))).build();
+    }
+
+
 }
