@@ -92,9 +92,13 @@ public class DogFacade
         for(DogDto.InnerWalkerDto walkerDto : dogDto.getWalkers())
         {
             Walker walker = em.find(Walker.class, walkerDto.getId());
+            //walker.addDog(updatedDog);
             updatedWalkerSet.add(walker);
+
         }
-        if(!dogFromDb.getWalkers().equals(updatedWalkerSet))
+
+            System.out.println(updatedWalkerSet);
+            if(!dogFromDb.getWalkers().equals(updatedWalkerSet))
         {
             dogFromDb.setWalkers(updatedWalkerSet);
         }
