@@ -204,6 +204,5 @@ public class DogResourceTest
                 .body("id", notNullValue())
                 .body("name", equalTo(d3.getName()))
                 .body("breed", equalTo(d3.getBreed()));
-        //.body("userName", equalTo(profileDto.getUser().getUserName()));
     }
 }

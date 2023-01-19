@@ -5,14 +5,19 @@ import dtos.WalkerDto;
 import entities.Dog;
 import entities.Owner;
 import entities.Walker;
+import errorhandling.GenericExceptionMapper;
 import handlers.DogHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotFoundException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DogFacade
 {
@@ -49,6 +54,7 @@ public class DogFacade
         List<Dog> dogList = query.getResultList();
 
         return DogDto.getDTOS(dogList);
+
     }
 
     public DogDto createDog(DogDto dogDto)
@@ -62,28 +68,17 @@ public class DogFacade
         em.persist(dog);
         em.getTransaction().commit();
 
-        /*if(dog.getOwner().getId() != null)
-        {
-            em.getTransaction().begin();
-            em.merge(owner);
-            em.getTransaction().commit();
-
-        }
-        else{
-            em.getTransaction().begin();
-            em.persist(dog);
-            em.getTransaction().commit();
-        }*/
-
         em.close();
         System.out.println(dog);
         return new DogDto(dog);
     }
 
-    public DogDto updateDog(DogDto dogDto)
+    public DogDto updateDog(DogDto dogDto) throws NotFoundException
     {
         EntityManager em = emf.createEntityManager();
         Set<Walker> updatedWalkerSet = new LinkedHashSet<>();
+
+        try{
 
         Dog dogFromDb = em.find(Dog.class, dogDto.getId());
         Owner owner;
@@ -110,17 +105,33 @@ public class DogFacade
         em.getTransaction().commit();
 
         return new DogDto(dogFromDb);
+
+        }catch (
+                NullPointerException ex)
+        {
+            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NotFoundException("No Dog found with that Id");
+        }
     }
 
-    public boolean deleteADog(int id)
+    public boolean deleteADog(int id) throws NotFoundException
     {
         EntityManager em = emf.createEntityManager();
-        Dog dog = em.find(Dog.class, id);
+        Dog dog;
+        try {
+        dog = em.find(Dog.class, id);
         dog.getOwner().removeDog(dog);
 
         em.getTransaction().begin();
         em.remove(dog);
         em.getTransaction().commit();
+
+        }catch (
+                NullPointerException ex)
+        {
+            Logger.getLogger(GenericExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NotFoundException("No Dog found with that Id");
+        }
 
         dog = em.find(Dog.class, id);
         if(dog == null)
@@ -128,5 +139,7 @@ public class DogFacade
             return true;
         }
         return false;
+
+
     }
 }

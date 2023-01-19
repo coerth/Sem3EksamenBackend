@@ -14,11 +14,11 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DogFacadeTest
 {
@@ -82,6 +82,7 @@ public class DogFacadeTest
         assertEquals(1, actual.size());
     }
 
+
     @Test
     void createDogTest()
     {
@@ -126,11 +127,30 @@ public class DogFacadeTest
     }
 
     @Test
+    void UpdateDogExceptionTest()
+    {
+        d1.setId(1010230);
+        DogDto dogDto = new DogDto(d1);
+
+        assertThrows(NotFoundException.class, () -> {
+            dogFacade.updateDog(dogDto);
+        });
+    }
+
+    @Test
     void deleteADogTest()
     {
 
         boolean actual = dogFacade.deleteADog(d1.getId());
 
         assertEquals(true, actual);
+    }
+
+    @Test
+    void DeleteDogExceptionTest()
+    {
+        assertThrows(NotFoundException.class, () -> {
+            dogFacade.deleteADog(1010230);
+        });
     }
 }
